@@ -1,0 +1,68 @@
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# Maven target directory
+/target/
+
+# Spring Boot generated files
+spring-boot-starter-*/
+spring-boot-starter-*/target/
+spring-boot-starter-*/build/
+
+# Gradle generated files
+/build/
+
+# Application Properties
+/application*.yml
+/application*.properties
+
+# Package file
+*.jar
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# macOS Finder files
+.DS_Store
+
+# .vscode directory
+.vscode/
+
+# .gradle directory
+.gradle/
+
+# Lombok configuration file
+/lombok.config
+
+# STS files
+.springBeans
+.bundled-plugins
+
+# Ignore Spring Boot build files
+/BackEnd/**/target/
+/BackEnd/**/.mvn/
+/BackEnd/**/.idea/
+/BackEnd/**/.settings/
+/BackEnd/**/.classpath
+/BackEnd/**/.project
+
+# Ignore Angular build files
+/FrontEnd/node_modules/
+/FrontEnd/dist/
+/FrontEnd/.angular/cache/
+/FrontEnd/.idea/

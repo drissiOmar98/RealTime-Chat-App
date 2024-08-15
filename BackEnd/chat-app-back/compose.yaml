@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    volumes:
+      - ~/volumes/omar/postgresql/:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=omar
+      - POSTGRES_USER=omar
+    ports:
+      - "5432:5432"
