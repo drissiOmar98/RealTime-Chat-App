@@ -3,7 +3,6 @@ package com.omar.chatappback.services.Impl;
 import com.omar.chatappback.entities.User;
 import com.omar.chatappback.message.ConversationPublicId;
 import com.omar.chatappback.services.UserService;
-import com.omar.chatappback.user.UserEmail;
 import com.omar.chatappback.user.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getOneByEmail(UserEmail userEmail) {
+    public Optional<User> getOneByEmail(String userEmail) {
         return Optional.empty();
     }
 

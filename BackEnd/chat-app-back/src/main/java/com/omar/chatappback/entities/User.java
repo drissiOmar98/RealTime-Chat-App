@@ -67,6 +67,8 @@ public class User extends AbstractAuditingEntity<Long> {
     )
     private Set<Conversation> conversations = new HashSet<>();
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +91,16 @@ public class User extends AbstractAuditingEntity<Long> {
 
     public void initFieldForSignup() {
         this.lastSeen = Instant.now();
+    }
+
+    public User(String  firstName, String lastName, String email, String imageUrl, Set<Authority> authorities, UUID publicId, Instant lastSeen) {
+        this.firstName =  firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.authorities = authorities;
+        this.publicId = publicId;
+        this.lastSeen = lastSeen;
     }
 
 

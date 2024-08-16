@@ -50,7 +50,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9080/realms/chatapp
+          issuer-uri: http://localhost:9080/realms/RealTime-Chat-App
   devtools:
     restart:
       enabled: false

@@ -18,7 +18,7 @@ public interface UserService {
 
     Optional<User> get(UserPublicId userPublicId);
 
-    Optional<User> getOneByEmail(UserEmail userEmail);
+    Optional<User> getOneByEmail(String userEmail);
 
     List<User> getByPublicIds(Set<UserPublicId> userPublicIds);
 
