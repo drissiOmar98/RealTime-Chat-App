@@ -2,8 +2,10 @@ package com.omar.chatappback.services.Impl;
 
 import com.omar.chatappback.entities.User;
 import com.omar.chatappback.message.ConversationPublicId;
+import com.omar.chatappback.repositories.UserRepository;
 import com.omar.chatappback.services.UserService;
 import com.omar.chatappback.user.UserPublicId;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,25 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
 
 
     @Override
     public void save(User user) {
+
+        if (user.getId() != null) { // Check if the user has an ID (for updates)
+            Optional<User> userToUpdateOpt = userRepository.findById(user.getId());
+            if (userToUpdateOpt.isPresent()) {
+                User userToUpdate = userToUpdateOpt.get();
+                userToUpdate.updateFromUser(user); // Update the fields
+                userRepository.saveAndFlush(userToUpdate); // Save the updated entity
+            }
+        } else {
+            userRepository.save(user); // Save the new user
+        }
 
     }
 
@@ -29,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getOneByEmail(String userEmail) {
-        return Optional.empty();
+        return userRepository.findByEmail(userEmail);
     }
 
     @Override

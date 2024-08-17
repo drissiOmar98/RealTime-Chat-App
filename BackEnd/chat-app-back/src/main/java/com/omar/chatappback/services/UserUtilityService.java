@@ -28,7 +28,7 @@ public class UserUtilityService {
     @Transactional
     public User getAuthenticatedUserWithSync(Jwt oauth2User, boolean forceResync) {
         userSynchronizer.syncWithIdp(oauth2User, forceResync);
-        return userReader.getByEmail(String.valueOf(new UserEmail(AuthenticatedUser.username().get())))
+        return userReader.getByEmail(AuthenticatedUser.username().get())
                 .orElseThrow();
     }
 

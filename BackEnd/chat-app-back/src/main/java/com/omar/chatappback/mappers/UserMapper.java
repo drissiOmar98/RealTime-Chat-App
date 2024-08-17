@@ -3,7 +3,6 @@ package com.omar.chatappback.mappers;
 
 import com.omar.chatappback.entities.Authority;
 import com.omar.chatappback.entities.User;
-import com.omar.chatappback.user.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-    public static User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
+    public  User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
         // Extracting attributes
         String sub = String.valueOf(attributes.get("sub"));
 

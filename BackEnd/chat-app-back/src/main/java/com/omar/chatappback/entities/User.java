@@ -3,12 +3,9 @@ package com.omar.chatappback.entities;
 
 import com.omar.chatappback.common.AbstractAuditingEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-import org.jilt.Builder;
+
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -51,7 +48,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(name = "last_seen")
     private Instant lastSeen = Instant.now();
 
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

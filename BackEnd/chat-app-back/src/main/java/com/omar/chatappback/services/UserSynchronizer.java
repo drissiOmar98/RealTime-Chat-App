@@ -25,7 +25,7 @@ public class UserSynchronizer {
     public void syncWithIdp(Jwt jwtToken, boolean forceResync) {
         Map<String, Object> attributes = jwtToken.getClaims();
         List<String> rolesFromToken = AuthenticatedUser.extractRolesFromToken(jwtToken);
-        User user = UserMapper.fromTokenAttributes(attributes, rolesFromToken);
+        User user = userMapper.fromTokenAttributes(attributes, rolesFromToken);
         Optional<User> existingUser = userService.getOneByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             if (attributes.get(UPDATE_AT_KEY) != null) {
