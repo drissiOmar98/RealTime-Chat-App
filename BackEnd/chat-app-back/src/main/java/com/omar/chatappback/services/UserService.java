@@ -1,8 +1,8 @@
 package com.omar.chatappback.services;
 
+import com.omar.chatappback.dto.user.UserResponse;
 import com.omar.chatappback.entities.User;
 import com.omar.chatappback.message.ConversationPublicId;
-import com.omar.chatappback.user.UserEmail;
 import com.omar.chatappback.user.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -20,13 +21,13 @@ public interface UserService {
 
     Optional<User> getOneByEmail(String userEmail);
 
-    List<User> getByPublicIds(Set<UserPublicId> userPublicIds);
+    List<UserResponse> getByPublicIds(Set<UUID> userPublicIds);
 
-    Page<User> search(Pageable pageable, String query);
+    Page<UserResponse> search(Pageable pageable, String query);
 
-    int updateLastSeenByPublicId(UserPublicId userPublicId, Instant lastSeen);
+    int updateLastSeenByPublicId(UUID userPublicId, Instant lastSeen);
 
-    List<User> getRecipientByConversationIdExcludingReader(ConversationPublicId conversationPublicId, UserPublicId readerPublicId);
+    List<UserResponse> getRecipientByConversationIdExcludingReader(UUID conversationPublicId, UUID readerPublicId);
 
-    Optional<User> getOneByPublicId(UserPublicId userPublicId);
+    Optional<UserResponse> getOneByPublicId(UUID userPublicId);
 }

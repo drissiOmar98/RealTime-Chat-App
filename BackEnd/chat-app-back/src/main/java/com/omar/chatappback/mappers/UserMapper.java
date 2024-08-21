@@ -1,6 +1,7 @@
 package com.omar.chatappback.mappers;
 
 
+import com.omar.chatappback.dto.user.UserResponse;
 import com.omar.chatappback.entities.Authority;
 import com.omar.chatappback.entities.User;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,40 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-    public  User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
+    public UserResponse toUserResponse(User user) {
+        Set<String> authorityNames = user.getAuthorities().stream()
+                .map(Authority::getName)
+                .collect(Collectors.toSet());
+
+        return new UserResponse(
+                user.getLastName(),
+                user.getFirstName(),
+                user.getEmail(),
+                user.getImageUrl(),
+                user.getPublicId(),
+                user.getLastSeen(),
+                user.getCreatedDate(),
+                authorityNames
+        );
+    }
+
+    public User toUser(UserResponse userResponse) {
+        return User.builder()
+                .publicId(userResponse.getPublicId())
+                .firstName(userResponse.getFirstName())
+                .lastName(userResponse.getLastName())
+                .email(userResponse.getEmail())
+                .imageUrl(userResponse.getImageUrl())
+                .lastSeen(userResponse.getLastSeen())
+                .authorities(userResponse.getAuthorities().stream()
+                        .map(Authority::new)  // Assuming you have an Authority class
+                        .collect(Collectors.toSet())
+                )
+                .build();
+    }
+
+
+        public  User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
         // Extracting attributes
         String sub = String.valueOf(attributes.get("sub"));
 

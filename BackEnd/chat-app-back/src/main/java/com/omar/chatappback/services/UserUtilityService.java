@@ -1,6 +1,7 @@
 package com.omar.chatappback.services;
 
 
+import com.omar.chatappback.dto.user.UserResponse;
 import com.omar.chatappback.entities.User;
 import com.omar.chatappback.shared.AuthenticatedUser;
 import com.omar.chatappback.user.UserEmail;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +41,7 @@ public class UserUtilityService {
     }
 
     @Transactional(readOnly = true)
-    public List<User> search(Pageable pageable, String query) {
+    public List<UserResponse> search(Pageable pageable, String query) {
         return userReader.search(pageable, query).stream().toList();
     }
 
@@ -49,12 +51,12 @@ public class UserUtilityService {
     }
 
     @Transactional
-    public void updatePresence(UserPublicId userPublicId) {
+    public void updatePresence(UUID userPublicId) {
         userPresence.updatePresence(userPublicId);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Instant> getLastSeen(UserPublicId userPublicId) {
+    public Optional<Instant> getLastSeen(UUID userPublicId) {
         return userPresence.getLastSeenByPublicId(userPublicId);
     }
 

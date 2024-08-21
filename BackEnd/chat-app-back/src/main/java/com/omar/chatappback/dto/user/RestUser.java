@@ -1,4 +1,4 @@
-package com.omar.chatappback.dto;
+package com.omar.chatappback.dto.user;
 
 import com.omar.chatappback.entities.User;
 import lombok.Builder;
