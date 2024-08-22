@@ -9,6 +9,7 @@ import {SearchQuery} from "./model/user-search.model";
 import {FormsModule} from "@angular/forms";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {ConversationSelectorComponent} from "./conversation-selector/conversation-selector.component";
+import {ConversationService} from "../../../conversations/conversation.service";
 
 @Component({
   selector: 'app-new-conversation',
@@ -26,7 +27,7 @@ export class NewConversationComponent implements OnInit, OnDestroy {
 
   searchService = inject(UserSearchService);
   toastService = inject(ToastService);
-  //conversationService = inject(ConversationService);
+  conversationService = inject(ConversationService);
   activeOffCanvas = inject(NgbActiveOffcanvas);
 
   public query = "";
@@ -86,10 +87,10 @@ export class NewConversationComponent implements OnInit, OnDestroy {
     this.activeOffCanvas.close();
   }
 
-  /*handleConversation(userPublicId: string): void {
+  handleConversation(userPublicId: string): void {
     this.conversationService.handleNavigateToConversation(userPublicId);
     this.activeOffCanvas.close();
-  }*/
+  }
 
 
 

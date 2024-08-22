@@ -37,7 +37,7 @@ public class Conversation extends AbstractAuditingEntity<Long> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "conversation")
     private Set<Message> messages = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "user_conversation",
             joinColumns = {@JoinColumn(name = "conversation_id", referencedColumnName = "id")},

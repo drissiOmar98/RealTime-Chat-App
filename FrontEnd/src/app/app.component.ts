@@ -7,11 +7,14 @@ import {Oauth2AuthService} from "./auth/oauth2-auth.service";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {ToastService} from "./shared/toast/toast.service";
 import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import {ConversationsComponent} from "./conversations/conversations.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast],
+  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -25,6 +28,7 @@ export class AppComponent  implements OnInit {
   ngOnInit(): void {
     this.initFontAwesome();
     this.initAuthentication();
+    this.configDayJs();
   }
 
   private initAuthentication(): void {
@@ -33,5 +37,9 @@ export class AppComponent  implements OnInit {
 
   private initFontAwesome() {
     this.faIconLibrary.addIcons(...fontAwesomeIcons);
+  }
+
+  private configDayJs() {
+    dayjs.extend(relativeTime);
   }
 }

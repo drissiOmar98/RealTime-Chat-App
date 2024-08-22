@@ -122,7 +122,7 @@ export class Oauth2AuthService {
     this.keycloak.accountManagement();
   }
 
-  andleLastSeen(userPublicId: string): void {
+  handleLastSeen(userPublicId: string): void {
     const params = new HttpParams().set("publicId", userPublicId);
     this.http.get<Date>(`${environment.API_URL}/users/get-last-seen`, {params})
       .subscribe({

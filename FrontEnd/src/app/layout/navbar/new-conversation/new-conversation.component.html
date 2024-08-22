@@ -14,7 +14,7 @@
           [title]="user.firstName + ' ' + user.lastName"
           [subtitle]="'Hi I\'m using Whatsapp clone'"
           [pictureUrl]="user.imageUrl!"
-          ></app-conversation-selector>
+          (select)="handleConversation(user.publicId!)"></app-conversation-selector>
       }
     </div>
     @if(usersResults.length === 0 && !loadingSearch) {

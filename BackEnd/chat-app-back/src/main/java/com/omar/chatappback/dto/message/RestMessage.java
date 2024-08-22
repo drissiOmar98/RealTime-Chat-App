@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Builder
@@ -66,8 +67,12 @@ public class RestMessage {
 
 
     public static List<RestMessage> from(Set<Message> messages) {
-        return messages.stream().map(RestMessage::from).toList();
+        if (messages == null) {
+            return List.of(); // Return an empty list if messages is null
+        }
+        return messages.stream().map(RestMessage::from).collect(Collectors.toList());
     }
+
 
    /* public static MessageSendNew toDomain(RestMessage restMessage) {
         // Build MessageContent, handling optional media content

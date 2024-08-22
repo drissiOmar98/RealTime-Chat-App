@@ -35,9 +35,13 @@ public class RestConversation {
                 .members(conversationResponse.getUsers().stream()
                         .map(RestUserForConversation::from)
                         .collect(Collectors.toList()))
-                .messages(conversationResponse.getMessages().stream()
-                        .map(RestMessage::from)
-                        .collect(Collectors.toList()))
+                .messages(
+                        (conversationResponse.getMessages() == null ?
+                                List.of() : // Return an empty list if messages is null
+                                conversationResponse.getMessages().stream()
+                                        .map(RestMessage::from)
+                                        .collect(Collectors.toList()))
+                )
                 .build();
     }
 

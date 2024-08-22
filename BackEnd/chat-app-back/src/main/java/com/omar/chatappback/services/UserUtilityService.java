@@ -36,7 +36,7 @@ public class UserUtilityService {
 
     @Transactional(readOnly = true)
     public User getAuthenticatedUser() {
-        return userReader.getByEmail(String.valueOf(new UserEmail(AuthenticatedUser.username().get())))
+        return userReader.getByEmail(AuthenticatedUser.username().get())
                 .orElseThrow();
     }
 
