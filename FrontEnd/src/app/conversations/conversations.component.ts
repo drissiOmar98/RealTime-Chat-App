@@ -6,6 +6,7 @@ import {Conversation, ConversationToCreate} from "./model/conversation.model";
 import {Subscription} from "rxjs";
 import {ConnectedUser} from "../shared/model/user.model";
 import {ConversationComponent} from "./conversation/conversation.component";
+import {SseService} from "../messages/service/sse.service";
 
 @Component({
   selector: 'app-conversations',
@@ -21,7 +22,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
   conversationService = inject(ConversationService);
   toastService = inject(ToastService);
   oauth2Service = inject(Oauth2AuthService);
-  //sseService = inject(SseService);
+  sseService = inject(SseService);
   //messageService = inject(MessageService);
 
   conversations = new Array<Conversation>();
@@ -80,7 +81,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.listenToGetOneByPublicId();
     this.listenToConversationCreated();
     this.listenToNavigateToConversation();
-    //this.listenToSSEDeleteConversation();
+    this.listenToSSEDeleteConversation();
     //this.listenToSSENewMessage();
     //this.listenToSSEViewMessage();
   }
@@ -151,7 +152,13 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.conversationService.navigateToNewConversation(conversation);
   }
 
-
+  private listenToSSEDeleteConversation(): void {
+    this.deleteSSESub = this.sseService.deleteConversation.subscribe(uuidDeleted => {
+      const indexToDelete = this.conversations.findIndex(conversation => conversation.publicId === uuidDeleted);
+      this.conversations.splice(indexToDelete, 1);
+      this.toastService.show("Conversation deleted by the user", "SUCCESS");
+    })
+  }
 
 
 

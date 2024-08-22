@@ -7,6 +7,7 @@ import com.omar.chatappback.notification.NotificationEventName;
 import com.omar.chatappback.notification.NotificationService;
 import com.omar.chatappback.state.State;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class MessageChangeNotifierImpl implements MessageChangeNotifier {
 
     private final NotificationService notificationService;
 
+    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
 
