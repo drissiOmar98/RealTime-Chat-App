@@ -46,8 +46,8 @@ public class UserUtilityService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserByEmail(UserEmail userEmail) {
-        return userReader.getByEmail(String.valueOf(userEmail));
+    public Optional<User> getUserByEmail(String userEmail) {
+        return userReader.getByEmail(userEmail);
     }
 
     @Transactional
