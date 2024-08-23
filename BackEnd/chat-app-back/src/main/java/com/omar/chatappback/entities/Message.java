@@ -4,11 +4,8 @@ package com.omar.chatappback.entities;
 import com.omar.chatappback.message.MessageSendState;
 import com.omar.chatappback.message.MessageType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.jilt.Builder;
+import lombok.*;
+
 
 import java.time.Instant;
 import java.util.Objects;

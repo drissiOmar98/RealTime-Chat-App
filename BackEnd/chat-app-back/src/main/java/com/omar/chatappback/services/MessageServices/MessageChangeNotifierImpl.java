@@ -1,7 +1,9 @@
 package com.omar.chatappback.services.MessageServices;
 
+import com.omar.chatappback.dto.message.RestMessage;
 import com.omar.chatappback.entities.Message;
 import com.omar.chatappback.message.ConversationViewedForNotification;
+import com.omar.chatappback.message.MessageWithUsers;
 import com.omar.chatappback.notification.ConversationIdWithUsers;
 import com.omar.chatappback.notification.NotificationEventName;
 import com.omar.chatappback.notification.NotificationService;
@@ -27,7 +29,9 @@ public class MessageChangeNotifierImpl implements MessageChangeNotifier {
 
     @Override
     public State<Void, String> send(Message message, List<UUID> userToNotify) {
-        return null;
+        MessageWithUsers messageWithUsers = new MessageWithUsers(message, userToNotify);
+        applicationEventPublisher.publishEvent(messageWithUsers);
+        return State.<Void, String>builder().forSuccess();
     }
 
     @Override
@@ -40,6 +44,12 @@ public class MessageChangeNotifierImpl implements MessageChangeNotifier {
     @Override
     public State<Void, String> view(ConversationViewedForNotification conversationViewedForNotification, List<UUID> usersToNotify) {
         return null;
+    }
+
+    @EventListener
+    public void handleNewMessage(MessageWithUsers messageWithUsers) {
+        notificationService.sendMessage(RestMessage.from(messageWithUsers.message()),
+                messageWithUsers.userToNotify(), NotificationEventName.NEW_MESSAGE);
     }
 
     @EventListener

@@ -74,7 +74,11 @@ public class RestMessage {
     }
 
 
-   /* public static MessageSendNew toDomain(RestMessage restMessage) {
+
+
+
+
+    public static MessageSendNew toDomain(RestMessage restMessage) {
         // Build MessageContent, handling optional media content
         MessageContent messageContent = MessageContent.builder()
                 .type(restMessage.getType())
@@ -83,7 +87,10 @@ public class RestMessage {
 
         // If the message is not text, add media content to MessageContent
         if (restMessage.getType() != MessageType.TEXT && restMessage.getMediaContent() != null) {
-            messageContent = messageContent.toBuilder()  // Create a new builder from the existing object
+            // Create a new MessageContent with media content
+            messageContent = MessageContent.builder()
+                    .text(messageContent.text())  // Preserve the existing text
+                    .type(messageContent.type())  // Preserve the existing type
                     .media(new MessageMediaContent(restMessage.getMediaContent(), restMessage.getMimeType()))
                     .build();
         }
@@ -91,10 +98,11 @@ public class RestMessage {
         // Return MessageSendNew with the constructed MessageContent and ConversationPublicId
         return MessageSendNew.builder()
                 .messageContent(messageContent)
-                .conversationPublicId(new ConversationPublicId(restMessage.getConversationId()))
+                .conversationPublicId(restMessage.getConversationId())  // Assuming ConversationPublicId is a UUID
                 .build();
     }
-*/
+
+
 
     public boolean hasMedia() {
         return !type.equals(MessageType.TEXT);

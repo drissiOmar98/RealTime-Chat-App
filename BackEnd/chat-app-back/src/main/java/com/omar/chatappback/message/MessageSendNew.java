@@ -1,8 +1,12 @@
 package com.omar.chatappback.message;
 
-import org.jilt.Builder;
+
+
+import lombok.Builder;
+
+import java.util.UUID;
 
 @Builder
 public record MessageSendNew(MessageContent messageContent,
-                             ConversationPublicId conversationPublicId) {
+                             UUID conversationPublicId) {
 }

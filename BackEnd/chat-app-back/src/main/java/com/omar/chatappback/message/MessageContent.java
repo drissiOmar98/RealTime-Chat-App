@@ -1,6 +1,7 @@
 package com.omar.chatappback.message;
 
-import org.jilt.Builder;
+
+import lombok.Builder;
 
 @Builder
 public record MessageContent(String text,

@@ -4,7 +4,7 @@ import com.omar.chatappback.entities.Message;
 
 import com.omar.chatappback.message.ConversationViewedForNotification;
 import com.omar.chatappback.state.State;
-import com.omar.chatappback.user.UserPublicId;
+
 
 import java.util.List;
 import java.util.UUID;
