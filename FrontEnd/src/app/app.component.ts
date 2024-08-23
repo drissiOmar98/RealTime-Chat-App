@@ -10,11 +10,12 @@ import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {ConversationsComponent} from "./conversations/conversations.component";
+import {HeaderComponent} from "./layout/header/header.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent],
+  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
