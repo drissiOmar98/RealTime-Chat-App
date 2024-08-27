@@ -85,7 +85,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.listenToNavigateToConversation();
     this.listenToSSEDeleteConversation();
     this.listenToSSENewMessage();
-    //this.listenToSSEViewMessage();
+    this.listenToSSEViewMessage();
   }
 
   private listenToGetAllConversation(): void {
@@ -194,6 +194,21 @@ export class ConversationsComponent implements OnInit, OnDestroy {
       // Sort the conversations by the last message to keep the most recent ones at the top
       this.conversationService.sortConversationByLastMessage(this.conversations);
     });
+  }
+
+  private listenToSSEViewMessage(): void {
+    this.viewedMessageSSESub = this.sseService.viewMessages.subscribe(
+      conversationViewedForNotification => {
+        if(this.selectedConversation?.publicId === conversationViewedForNotification.conversationId) {
+          conversationViewedForNotification.messageIdsViewed.forEach(messageId => {
+            const messageToUpdate = this.selectedConversation?.messages.find(message => message.publicId === messageId)
+            if(messageToUpdate) {
+              messageToUpdate.state = "READ";
+            }
+          })
+        }
+      }
+    )
   }
 
 

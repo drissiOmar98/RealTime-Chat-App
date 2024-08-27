@@ -4,6 +4,8 @@ import {interval, Subject, Subscription} from "rxjs";
 import {Message} from "../../conversations/model/message.model";
 import dayjs from "dayjs";
 import {EventSourcePolyfill} from "event-source-polyfill";
+import {ConversationViewedForNotification} from "./sse.model";
+
 
 
 @Injectable({
@@ -21,8 +23,8 @@ export class SseService {
   private deleteConversation$ = new Subject<string>();
   deleteConversation = this.deleteConversation$.asObservable();
 
-  //private viewMessages$ = new Subject<ConversationViewedForNotification>();
-  //viewMessages = this.viewMessages$.asObservable();
+  private viewMessages$ = new Subject<ConversationViewedForNotification>();
+  viewMessages = this.viewMessages$.asObservable();
 
 
   accessToken: string | undefined;
@@ -57,6 +59,10 @@ export class SseService {
 
     this.eventSource.addEventListener("delete-conversation", event => {
       this.deleteConversation$.next(JSON.parse(event.data));
+    });
+
+    this.eventSource.addEventListener("view-messages", event => {
+      this.viewMessages$.next(JSON.parse(event.data));
     });
 
 
