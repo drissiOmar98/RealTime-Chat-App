@@ -11,11 +11,12 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {ConversationsComponent} from "./conversations/conversations.component";
 import {HeaderComponent} from "./layout/header/header.component";
+import {SendComponent} from "./messages/send/send.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent, HeaderComponent, SendComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

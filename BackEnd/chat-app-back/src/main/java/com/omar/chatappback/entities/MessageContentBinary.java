@@ -1,6 +1,7 @@
 package com.omar.chatappback.entities;
 
 
+import com.omar.chatappback.common.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name = "message_binary_content")
 @Builder
-public class MessageContentBinary {
+public class MessageContentBinary extends AbstractAuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "messageContentBinarySequenceGenerator")

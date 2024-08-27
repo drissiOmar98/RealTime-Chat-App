@@ -30,4 +30,8 @@ public interface UserService {
     List<UserResponse> getRecipientByConversationIdExcludingReader(UUID conversationPublicId, UUID readerPublicId);
 
     Optional<UserResponse> getOneByPublicId(UUID userPublicId);
+
+    Optional<User> getUserByPublicId(UUID userPublicId);
+
+
 }

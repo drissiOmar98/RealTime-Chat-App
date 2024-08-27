@@ -93,4 +93,11 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toUserResponse);
 
     }
+
+    @Override
+    public Optional<User> getUserByPublicId(UUID userPublicId) {
+        return userRepository.findOneByPublicId(userPublicId);
+    }
+
+
 }

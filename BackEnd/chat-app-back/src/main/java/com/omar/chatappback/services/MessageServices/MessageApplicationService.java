@@ -7,7 +7,6 @@ import com.omar.chatappback.message.MessageSendNew;
 import com.omar.chatappback.services.UserReader;
 import com.omar.chatappback.shared.AuthenticatedUser;
 import com.omar.chatappback.state.State;
-import com.omar.chatappback.user.UserEmail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

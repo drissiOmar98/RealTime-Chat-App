@@ -94,4 +94,9 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationRepository.findOneByPublicId(conversationPublicId)
                 .map(conversationMapper::toConversationResponse);
     }
+
+    @Override
+    public Optional<Conversation> getConversationByPublicId(UUID conversationPublicId) {
+        return conversationRepository.findOneByPublicId(conversationPublicId);
+    }
 }

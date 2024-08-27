@@ -28,6 +28,8 @@ public interface ConversationService {
 
     Optional<ConversationResponse> getOneByPublicId(UUID conversationPublicId);
 
+    Optional<Conversation> getConversationByPublicId(UUID conversationPublicId);
+
 
 
 

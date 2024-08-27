@@ -2,8 +2,10 @@ package com.omar.chatappback.dto.message;
 
 import com.omar.chatappback.entities.Message;
 import com.omar.chatappback.message.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RestMessage {
 
     private String textContent;

@@ -36,6 +36,7 @@ public class UserReader {
         return userService.getOneByPublicId(publicId);
     }
 
+
     public List<UserResponse> findUsersToNotify(UUID conversationPublicId, UUID readerPublicId) {
         return userService.getRecipientByConversationIdExcludingReader(conversationPublicId, readerPublicId);
     }

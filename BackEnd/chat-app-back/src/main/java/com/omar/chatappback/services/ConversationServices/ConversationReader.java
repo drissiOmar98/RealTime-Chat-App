@@ -1,7 +1,6 @@
 package com.omar.chatappback.services.ConversationServices;
 
 import com.omar.chatappback.dto.conversation.ConversationResponse;
-import com.omar.chatappback.entities.Conversation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

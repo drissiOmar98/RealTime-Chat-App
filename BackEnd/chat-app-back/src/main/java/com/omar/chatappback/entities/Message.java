@@ -1,6 +1,7 @@
 package com.omar.chatappback.entities;
 
 
+import com.omar.chatappback.common.AbstractAuditingEntity;
 import com.omar.chatappback.message.MessageSendState;
 import com.omar.chatappback.message.MessageType;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "message")
 @Builder
-public class Message {
+public class Message  extends AbstractAuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "messageSequenceGenerator")
@@ -44,11 +45,11 @@ public class Message {
     private MessageSendState sendState;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_fk_sender", nullable = false)
+    @JoinColumn(name = "user_fk_sender")
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conversation_fk", nullable = false)
+    @JoinColumn(name = "conversation_fk")
     private Conversation conversation;
 
     @OneToOne
