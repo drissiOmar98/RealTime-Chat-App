@@ -7,6 +7,8 @@ import {Subscription} from "rxjs";
 import {ConnectedUser} from "../shared/model/user.model";
 import {ConversationComponent} from "./conversation/conversation.component";
 import {SseService} from "../messages/service/sse.service";
+import {Message} from "./model/message.model";
+import {MessageService} from "../messages/service/message.service";
 
 @Component({
   selector: 'app-conversations',
@@ -23,7 +25,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
   toastService = inject(ToastService);
   oauth2Service = inject(Oauth2AuthService);
   sseService = inject(SseService);
-  //messageService = inject(MessageService);
+  messageService = inject(MessageService);
 
   conversations = new Array<Conversation>();
   selectedConversation: Conversation | undefined;
@@ -82,7 +84,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.listenToConversationCreated();
     this.listenToNavigateToConversation();
     this.listenToSSEDeleteConversation();
-    //this.listenToSSENewMessage();
+    this.listenToSSENewMessage();
     //this.listenToSSEViewMessage();
   }
 
@@ -158,6 +160,40 @@ export class ConversationsComponent implements OnInit, OnDestroy {
       this.conversations.splice(indexToDelete, 1);
       this.toastService.show("Conversation deleted by the user", "SUCCESS");
     })
+  }
+
+  private listenToSSENewMessage(): void {
+    // Subscribe to receive new messages from the SSE (Server-Sent Events) service
+    this.sseService.receiveNewMessage.subscribe(newMessage => {
+      // Find the index of the conversation in the list that matches the conversation ID of the new message
+      const indexToUpdate = this.conversations.findIndex(conversation => conversation.publicId === newMessage.conversationId);
+
+      // If the conversation is not found in the current list, fetch it using the conversation service
+      if (indexToUpdate === -1) {
+        this.conversationService.handleGetOne(newMessage.conversationId);
+      } else {
+        // If the conversation is found, retrieve it from the list
+        const conversationToUpdate = this.conversations[indexToUpdate];
+
+        // Initialize the messages array if it doesn't already exist
+        if (!conversationToUpdate.messages) {
+          conversationToUpdate.messages = new Array<Message>();
+        }
+
+        // Add the new message to the conversation's messages
+        conversationToUpdate.messages.push(newMessage);
+
+        // Extract the sender information using the message service
+        const sender = this.messageService.extractSender(conversationToUpdate.members, newMessage.senderId!);
+
+        // Check if the sender is not the current user, and show a toast notification if the message is from another user
+        if (this.oauth2Service.fetchUser().value!.publicId !== sender.publicId) {
+          this.toastService.show(`New message received from ${sender.firstName} ${sender.lastName}`, "SUCCESS");
+        }
+      }
+      // Sort the conversations by the last message to keep the most recent ones at the top
+      this.conversationService.sortConversationByLastMessage(this.conversations);
+    });
   }
 
 
