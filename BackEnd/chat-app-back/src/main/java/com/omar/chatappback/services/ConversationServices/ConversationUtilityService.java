@@ -23,6 +23,7 @@ public class ConversationUtilityService {
     private final ConversationReader conversationReader;
     private final ConversationDeleter conversationDeleter;
     private final UserUtilityService userUtilityService;
+    private final ConversationViewed conversationViewed;
 
 
     @Transactional
@@ -48,6 +49,12 @@ public class ConversationUtilityService {
     public Optional<ConversationResponse> getOneByConversationId(UUID conversationPublicId) {
         User authenticatedUser = userUtilityService.getAuthenticatedUser();
         return this.conversationReader.getOneByPublicIdAndUserId(conversationPublicId, authenticatedUser.getPublicId());
+    }
+
+    @Transactional
+    public State<Integer, String> markConversationAsRead(UUID conversationPublicId) {
+        User authenticatedUser = userUtilityService.getAuthenticatedUser();
+        return conversationViewed.markAsRead(conversationPublicId, authenticatedUser.getPublicId());
     }
 
 }

@@ -3,6 +3,7 @@ package com.omar.chatappback.services.MessageServices;
 import com.omar.chatappback.dto.message.RestMessage;
 import com.omar.chatappback.entities.Message;
 import com.omar.chatappback.message.ConversationViewedForNotification;
+import com.omar.chatappback.message.MessageIdWithUsers;
 import com.omar.chatappback.message.MessageWithUsers;
 import com.omar.chatappback.notification.ConversationIdWithUsers;
 import com.omar.chatappback.notification.NotificationEventName;
@@ -43,7 +44,9 @@ public class MessageChangeNotifierImpl implements MessageChangeNotifier {
 
     @Override
     public State<Void, String> view(ConversationViewedForNotification conversationViewedForNotification, List<UUID> usersToNotify) {
-        return null;
+        MessageIdWithUsers messageIdWithUsers = new MessageIdWithUsers(conversationViewedForNotification, usersToNotify);
+        applicationEventPublisher.publishEvent(messageIdWithUsers);
+        return State.<Void, String>builder().forSuccess();
     }
 
     @EventListener
@@ -56,6 +59,12 @@ public class MessageChangeNotifierImpl implements MessageChangeNotifier {
     public void handleDeleteConversation(ConversationIdWithUsers conversationIdWithUsers) {
         notificationService.sendMessage(conversationIdWithUsers.conversationPublicId(),
                 conversationIdWithUsers.users(), NotificationEventName.DELETE_CONVERSATION);
+    }
+
+    @EventListener
+    public void handleView(MessageIdWithUsers messageIdWithUsers) {
+        notificationService.sendMessage(messageIdWithUsers.conversationViewedForNotification(),
+                messageIdWithUsers.usersToNotify(), NotificationEventName.VIEWS_MESSAGES);
     }
 
 }

@@ -8,6 +8,7 @@ import com.omar.chatappback.entities.Message;
 import com.omar.chatappback.entities.MessageContentBinary;
 import com.omar.chatappback.entities.User;
 
+import com.omar.chatappback.message.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class MessageMapper {
 
 
 
-    public MessageResponse toMessageResponse(Message message) {
+    /*public MessageResponse toMessageResponse(Message message) {
         return MessageResponse.builder()
                 .publicId(message.getPublicId())
                 .sendDate(message.getSendTime())
@@ -36,7 +37,33 @@ public class MessageMapper {
                         .map(MessageContentBinary::getFileContentType)
                         .orElse(null))
                 .build();
+    }*/
+
+    public MessageResponse toMessageResponse(Message message) {
+        MessageResponse.MessageResponseBuilder messageResponseBuilder = MessageResponse.builder()
+                .publicId(message.getPublicId())
+                .conversationId(message.getConversation().getPublicId())
+                .state(message.getSendState())
+                .sendDate(message.getSendTime())
+                .senderId(message.getSender().getPublicId());
+
+        if (message.getType().equals(MessageType.TEXT)) {
+            // If the message is of type TEXT, map the text content and set type to TEXT
+            messageResponseBuilder.textContent(message.getText())
+                    .type(MessageType.TEXT);
+        } else {
+            // If the message contains media, map the media content and its MIME type
+            if (message.getContentBinary() != null) {
+                messageResponseBuilder.mediaContent(message.getContentBinary().getFile())
+                        .mimeType(message.getContentBinary().getFileContentType());
+            }
+            messageResponseBuilder.textContent(message.getText())
+                    .type(message.getType());
+        }
+
+        return messageResponseBuilder.build();
     }
+
 
 
 

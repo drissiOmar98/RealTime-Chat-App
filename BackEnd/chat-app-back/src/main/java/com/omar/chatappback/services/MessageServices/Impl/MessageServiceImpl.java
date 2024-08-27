@@ -5,6 +5,7 @@ import com.omar.chatappback.dto.message.MessageResponse;
 import com.omar.chatappback.entities.Conversation;
 import com.omar.chatappback.entities.Message;
 import com.omar.chatappback.entities.User;
+import com.omar.chatappback.mappers.MessageMapper;
 import com.omar.chatappback.message.MessageSendState;
 import com.omar.chatappback.message.MessageType;
 import com.omar.chatappback.repositories.MessageBinaryContentRepository;
@@ -23,6 +24,8 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
 
     private final MessageBinaryContentRepository messageBinaryContentRepository;
+
+    private final MessageMapper messageMapper;
 
 
 
@@ -45,11 +48,16 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public int updateMessageSendState(UUID conversationPublicId, UUID userPublicId, MessageSendState state) {
-        return 0;
+        return messageRepository.updateMessageSendState(conversationPublicId, userPublicId, state);
     }
 
     @Override
     public List<MessageResponse> findMessageToUpdateSendState(UUID conversationPublicId, UUID userPublicId) {
-        return List.of();
+        List<Message> messagesToUpdate = messageRepository.findMessageToUpdateSendState(conversationPublicId, userPublicId);
+        // Map the Message entities to MessageResponse DTOs
+        return messagesToUpdate.stream()
+                .map(messageMapper::toMessageResponse)
+                .toList(); // Collect as a list
+
     }
 }

@@ -73,6 +73,13 @@ public class ConversationController {
         }
     }
 
+    @PostMapping("/mark-as-read")
+    ResponseEntity<Integer> markConversationAsRead(@RequestParam UUID conversationId) {
+        State<Integer, String> readUpdateState = conversationService.markConversationAsRead(
+                conversationId);
+        return ResponseEntity.ok(readUpdateState.getValue());
+    }
+
 
 
 
